@@ -1,0 +1,1 @@
+<?php get_header(); ?><main id="main-content" class="wrap editorial-content"><h1><?php echo esc_html(megas_t('Η σελίδα δεν βρέθηκε.','Page not found.')); ?></h1><p><a class="button" href="<?php echo esc_url(megas_home()); ?>"><?php echo esc_html(megas_t('Επιστροφή στην αρχική','Back to home')); ?></a></p></main><?php get_footer(); ?>
