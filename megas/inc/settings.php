@@ -1,6 +1,6 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
-function megas_contact_defaults() { return array('phone'=>'2741022201','email'=>'hello@megas.coffee','address'=>'Κροκιδά 15, Κόρινθος, ΤΚ 20100'); }
+function megas_contact_defaults() { return array('phone'=>'2741022201','email'=>'hello@megas.coffee','address'=>'Κροκιδά 15, Κόρινθος, ΤΚ 20100','hours'=>"Δευτέρα έως Παρασκευή, 09:00–17:00\nΕξαιρούνται οι επίσημες αργίες",'en_hours'=>"Monday to Friday, 09:00–17:00\nExcluding public holidays"); }
 function megas_contact_value($key) { $defaults=megas_contact_defaults();return get_theme_mod('megas_'.$key,$defaults[$key] ?? ''); }
 function megas_defaults() {
  return array(
@@ -53,6 +53,10 @@ function megas_customize($wp_customize) {
  $wp_customize->add_control('megas_language',array('label'=>'Γλώσσα περιεχομένου χωρίς Polylang','section'=>'megas_contact','type'=>'select','choices'=>array('el'=>'Ελληνικά','en'=>'English')));
  foreach(array('phone'=>'Τηλέφωνο','email'=>'Δημόσιο email / παραλήπτης φόρμας','address'=>'Διεύθυνση','contact_url'=>'Σελίδα επικοινωνίας (προαιρετικό)','terms_url'=>'Όροι χρήσης (URL)','english_url'=>'Αγγλική αρχική (αν δεν χρησιμοποιείται Polylang)') as $key=>$label){
   $sanitize=str_ends_with($key,'url')?'esc_url_raw':($key==='email'?'sanitize_email':'sanitize_text_field');$wp_customize->add_setting('megas_'.$key,array('default'=>megas_contact_defaults()[$key] ?? '','sanitize_callback'=>$sanitize));$wp_customize->add_control('megas_'.$key,array('label'=>$label,'section'=>'megas_contact','type'=>str_ends_with($key,'url')?'url':($key==='email'?'email':'text')));
+ }
+ foreach(array('hours'=>'Ωράριο λειτουργίας — Ελληνικά','en_hours'=>'Opening hours — English') as $key=>$label){
+  $wp_customize->add_setting('megas_'.$key,array('default'=>megas_contact_defaults()[$key],'sanitize_callback'=>'sanitize_textarea_field'));
+  $wp_customize->add_control('megas_'.$key,array('label'=>$label,'section'=>'megas_contact','type'=>'textarea'));
  }
  for($i=0;$i<4;$i++){$key='megas_product_url_'.$i;$wp_customize->add_setting($key,array('default'=>'','sanitize_callback'=>'esc_url_raw'));$wp_customize->add_control($key,array('label'=>'Σύνδεσμος προϊόντος '.($i+1),'section'=>'megas_products','type'=>'url'));}
 }

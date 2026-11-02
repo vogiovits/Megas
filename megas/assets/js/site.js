@@ -7,6 +7,7 @@
   const submenu=item.querySelector(':scope > .sub-menu');const link=item.querySelector(':scope > a');if(!submenu||!link)return;
   const button=document.createElement('button');button.type='button';button.className='submenu-toggle';button.setAttribute('aria-expanded','false');button.setAttribute('aria-label',link.textContent.trim()+' — '+(document.documentElement.lang.startsWith('el')?'υπομενού':'submenu'));button.innerHTML='<span aria-hidden="true">⌄</span>';link.after(button);
   button.addEventListener('click',()=>{const open=button.getAttribute('aria-expanded')!=='true';button.setAttribute('aria-expanded',String(open));item.classList.toggle('submenu-open',open);});
+  link.addEventListener('click',event=>{if(window.matchMedia('(max-width:760px)').matches){event.preventDefault();event.stopImmediatePropagation();button.click();}});
  });
  nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
  document.addEventListener('click',e=>{
